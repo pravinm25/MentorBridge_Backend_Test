@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: Bank Application
+  version: 1.0.0
+  description: API for Create account, Withdraw and Deposit amount
+
+paths:
+  /bank:
+    post:
+      tags:
+        - BankAccount
+      summary: Create account
+      operationId: openAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankDto'
+      responses:
+        '201':
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                type: string
+
+    get:
+      tags:
+        - BankAccount
+      summary: Get all account details
+      operationId: getAllAccount
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BankDto'
+
+  /bank/{accountNumber}:
+    put:
+      tags:
+        - BankAccount
+      summary: update account details
+      operationId: depositAmount
+      parameters:
+        - name: accountNumber
+          required: true
+          in: path
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankDto"
+
+      responses:
+        "201":
+          description: account details updated
+          content:
+            application/json:
+              schema:
+                type: string
+
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+
+        "404":
+          description: data not found
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /bank/withdraw{accountNumber}:
+    put:
+      tags:
+        - BankAccount
+      summary: update account details
+      operationId: withdrawAmount
+      parameters:
+        - name: accountNumber
+          required: true
+          in: path
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankDto"
+
+      responses:
+        "201":
+          description: account details updated
+          content:
+            application/json:
+              schema:
+                type: string
+
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                type: string
+
+        "404":
+          description: data not found
+          content:
+            application/json:
+              schema:
+                type: string
+
+
+components:
+  schemas:
+    BankDto:
+      properties:
+        accountNumber:
+          type: string
+        accountHolderName:
+          type: string
+        accountBalance:
+          type: number
+          format: double
